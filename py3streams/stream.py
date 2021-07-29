@@ -1,8 +1,11 @@
 
 from .stream_base import StreamBase
+import re
 
 
 class Stream(StreamBase):
+
+    REGEX_DIGITS = re.compile(r'^\d+\.{0,1}\d*$')
 
     def __init__(self, value):
         super().__init__(value)
@@ -66,6 +69,9 @@ class Stream(StreamBase):
     def only_list(self):
         return self.filter(lambda x: isinstance(x, (list, set, tuple)))
 
+    def only_digits(self):
+        return self.filter(lambda x: isinstance(x, (int, float)) or (isinstance(x, (str, bytes)) and self.REGEX_DIGITS.match(x)))
+
     def sum(self):
         return sum(self.get_lazy())
 
@@ -77,6 +83,9 @@ class Stream(StreamBase):
 
     def no_none(self):
         return self.filter(lambda x: x is not None)
+
+    def no_list(self):
+        return self.filter(lambda x: not isinstance(x, (list, set, tuple)))
 
     def exists(self):
         return self.filter(lambda x: x)

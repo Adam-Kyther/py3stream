@@ -46,3 +46,8 @@ class TestStream(unittest.TestCase):
         sub_list2 = Stream(elements).only_list().fmap(lambda x: Stream(x)).map_to_int().le(6).to_list()
         self.assertEqual(sub_list2, [5, 5, 5, 6])
 
+    def test_only_digits(self):
+        elements= ["a", "c", 1, 3, ["a", "b"], 4, "4.5", "4a"]
+        values = Stream(elements).only_digits().to_list()
+        self.assertEqual(values, [1, 3, 4, '4.5'])
+
