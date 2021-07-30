@@ -22,16 +22,21 @@ class StreamBase(ABC):
     def operations(self):
         return self.lazy_actions
 
+    def fmap(self, func):
+        from .dict_stream import DictStream
+        def _wrap(streams):
+            for s in streams:
+                yield from (s.iterable_object.items() if isinstance(s, DictStream) else s.iterable_object)
+
+        self.add(_wrap((func(i) for i in self.get_lazy())))
+        return self
+
     @abstractmethod
     def filter(self, func):
         pass
 
     @abstractmethod
     def map(self, func):
-        pass
-
-    @abstractmethod
-    def fmap(self, func):
         pass
 
     @abstractmethod

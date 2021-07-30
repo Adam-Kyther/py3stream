@@ -18,14 +18,6 @@ class Stream(StreamBase):
         self.add((func(i) for i in self.get_lazy()))
         return self
 
-    def fmap(self, func):
-        def _wrap(streams):
-            for elements in (s.iterable_object for s in streams):
-                yield from elements
-
-        self.add(_wrap((func(i) for i in self.get_lazy())))
-        return self
-
     def to_dict(self):
         raise NotImplementedError("Method is not implemented for Stream. Use Dictstream instead.")
 
@@ -65,6 +57,9 @@ class Stream(StreamBase):
 
     def all_match(self, func):
         return all(func(i) for i in self.get_lazy())
+
+    def only_dict(self):
+        return self.filter(lambda x: isinstance(x, dict))
 
     def only_list(self):
         return self.filter(lambda x: isinstance(x, (list, set, tuple)))

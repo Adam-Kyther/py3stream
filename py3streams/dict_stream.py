@@ -16,16 +16,8 @@ class DictStream(StreamBase):
         self.add((func(k, v) for k, v in self.get_lazy()))
         return self
 
-    def fmap(self, func):
-        def _wrap(streams):
-            for pairs in (s.iterable_object for s in streams):
-                yield from pairs
-
-        self.add(_wrap((func(k,v) for k,v in self.get_lazy())))
-        return self
-
     def to_list(self):
-        raise NotImplementedError("Method is not implemented in DictStream. use Stream instead")
+        return list(self.get_lazy())
 
     def to_dict(self):
         return {k:v for k,v in self.get_lazy()}
@@ -40,7 +32,14 @@ class DictStream(StreamBase):
         return Stream((k for k, _ in self.get_lazy()))
 
     def limit(self, limit):
-        pass
+        def _wrap(iterator):
+            for i, e in enumerate(iterator):
+                if i < limit:
+                    yield e
+                else:
+                    break
+
+        self.add(_wrap(self.get_lazy()))
 
     def reverse(self):
         raise NotImplementedError("Method cannot be implemented in dict, because of no order")
