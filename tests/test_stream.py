@@ -5,6 +5,11 @@ import unittest
 
 class TestStream(unittest.TestCase):
 
+    def test_optional(self):
+        elements = [0, 1, 2, 3]
+        opt = Stream(elements).gt(4).get_first().if_present(lambda x: x[4], "val1")
+        self.assertEqual(opt, "val1")
+
     def test_reverse(self):
         amount = Stream(["a", "b", "c", "d", None]).filter(lambda x: x is not None).count()
         self.assertEqual(amount, 4)
