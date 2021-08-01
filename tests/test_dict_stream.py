@@ -20,3 +20,4 @@ class TestDictStream(unittest.TestCase):
         elements = {"id": 1, "values": [[1,2,3], [5,7]], "test": True}
         result = DictStream(elements).values().only_list().fmap(lambda x: Stream(x)).fmap(lambda x: Stream(x)).to_list()
         self.assertEqual(result, [1, 2, 3, 5, 7])
+
