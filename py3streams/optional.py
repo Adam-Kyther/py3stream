@@ -1,18 +1,32 @@
 
 
 def no_empty(value):
+    """
+    Check if value is not None and empty.
+    """
     return (value is not None) and value
 
 
 def is_empty(value):
+    """
+    Check if value is None or not empty in case if not None.
+    """
     return (value is None) or (not value)
 
 
 def get_or_else(value, default_value=None):
+    """
+    Return value if it is not empty. Otherwise default value (by default: None).
+    """
     return value if no_empty(value) else default_value
 
 
 class Optional:
+    """
+    Optional object holds data and allow manipulate it with prepared functions.
+    If stored value presents and its not None (is_present()) will return true. 'get()' will return stored value.
+    get_or_else(default_value) will return stored value if exists, otherwise default_value.
+    """
 
     _EMPTY = None
 
@@ -43,5 +57,5 @@ class Optional:
         return self.present
 
     def if_present(self, func, default_value=None):
-        return func(self._data) if self.present else default_value
+        return func(self._data) if self.is_present() else default_value
 

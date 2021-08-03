@@ -14,8 +14,8 @@ class StreamBase(ABC):
     def add(self, generator):
         self.lazy_actions.append(generator)
 
-    def get_first(self, default_value=None):
-        return Optional.of(next(self.__iter__(), default_value))
+    def get_first(self):
+        return Optional.of(next(self.__iter__(), None))
 
     def __iter__(self):
         yield from self.get_lazy()
