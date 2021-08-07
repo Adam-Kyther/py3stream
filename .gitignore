@@ -5,3 +5,5 @@ imain.py
 build
 dist
 *.egg-info
+venv
+env

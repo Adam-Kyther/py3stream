@@ -15,4 +15,3 @@ class IntStream(Stream):
 
     def __init__(self, start: int, end: int, step: int = 1):
         super().__init__(range(start, end, step))
-

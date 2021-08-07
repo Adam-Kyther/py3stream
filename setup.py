@@ -38,9 +38,9 @@ DESCRIPTION = "Package for manipulate collections with streams and generators."
 setup(
     name="py3streams",
     version=get_last_commit_version(),
-    author="Adam Kyther",
+    author="Marek Adam Gancarz",
     author_email="",
-    desciption=DESCRIPTION,
+    description=DESCRIPTION,
     long_description=get_long_description(README_PATH),
     long_description_content_type="text/markdown",
     packages=find_packages(),

@@ -8,6 +8,7 @@ Package contains classes to support operations on collections and container obje
 * [Description](#Description)
 * [Installation](#Installation)
 * [Usage](#Usage)
+* [Build-in functions](#Build-in functions)
 
 ## Description
 Classes from the package are: **Stream**, **IntStream** and **DictStream**. Classes may help with manipulate nested lists or dicts, filter values with build-in object functions or map functions on the values. There are few cases which is very important to understand:
@@ -116,4 +117,26 @@ Filter list elements and merge them.
 nested_elements = Stream(elements).filter(lambda x: isinstance(x, list)).fmap(lambda x: Stream(x)).to_list()
 # result: [1,2,3,4,5,6,7]
 ```
+
+## Build-in functions
+Lambda mechanism can be replaced with few build-in methods which contains lambdas inside and hide them from the user.
+Alternatives work **only** with **Stream** class.
+
+| classic filter/map | build-in alternative | Comments |
+|-------------------:|:---------------------|----------|
+| map(lambda x: str(x))| map_to_str() | change elements to str |
+| map(lambda x: int(x))| map_to_int() | change elements to int |
+| map(lambda x: float(x)) | map_to_float() | change elements to float |
+| filter(lambda x: isinstance(x, dict)) | only_dict() | select only dicts |
+| filter(lambda x: isinstance(x, (list, set, tuple))) | only_list() | select only lists |
+| filter(lambda x: not isinstance(x, (list, set, tuple)))| no_list() | select all except lists |
+| filter(lambda x: x is not None) | no_none() | select all (includes zeros, empty string:"" and empty lists:[]) except None |
+| filter(lambda x: x) | exists() | elements which exists and are not empty |
+| filter(lambda x: x%2 == 0) | even() | even numbers |
+| filter(lambda x: (x%2 - 1) == 0) | odd() | odd numbers |
+| filter(lambda x: x > value) | gt(value: int) | greater than |
+| filter(lambda x: x < value) | lt(value: int) | less than |
+| filter(lambda x: x >= value) | ge(value: int) | greater and equal |
+| filter(lambda x: x <= value) | le(value: int) | less and equal |
+| filter(lambda x: x == value) | eq(value: object) | equal to | 
 
