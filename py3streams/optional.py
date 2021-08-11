@@ -1,21 +1,23 @@
+from __future__ import annotations
+
 from typing import Generator, Any
 
 
-def no_empty(value):
+def no_empty(value: object) -> bool:
     """
     Check if value is not None and empty.
     """
     return (value is not None) and value
 
 
-def is_empty(value):
+def is_empty(value: object) -> bool:
     """
     Check if value is None or not empty in case if not None.
     """
     return (value is None) or (not value)
 
 
-def get_or_else(value, default_value=None):
+def get_or_else(value: object, default_value: object = None) -> bool:
     """
     Return value if it is not empty. Otherwise default value (by default: None).
     """
@@ -35,13 +37,13 @@ class Optional:
         self._data = data
 
     @classmethod
-    def empty(cls) -> object:
+    def empty(cls) -> Optional:
         if cls._EMPTY is None:
             cls._EMPTY = Optional(cls._EMPTY)
         return cls._EMPTY
 
     @classmethod
-    def of(cls, data: object) -> object:
+    def of(cls, data: object) -> Optional:
         """
         Get Optional object with provided data. If data is None, return Optional.empty object.
 
@@ -76,7 +78,7 @@ class Optional:
         """
         return self.present
 
-    def if_present(self, func: Generator, default_value=None) -> Any:
+    def if_present(self, func: Any, default_value: object = None) -> Any:
         """
         Verify if stored object is present. If yes, that apply lambda function. If not ignore it.
 
