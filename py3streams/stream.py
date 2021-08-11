@@ -3,7 +3,7 @@ from __future__ import annotations
 from .stream_base import StreamBase
 import re
 
-from typing import Generator, Iterable
+from typing import Generator, Iterable, Any
 
 
 class Stream(StreamBase):
@@ -24,11 +24,11 @@ class Stream(StreamBase):
         """
         return self.iterable_object
 
-    def filter(self, func: Generator) -> Stream:
+    def filter(self, func: Any) -> Stream:
         self.add((i for i in self.get_last_gen() if func(i)))
         return self
 
-    def map(self, func: Generator) -> Stream:
+    def map(self, func: Any) -> Stream:
         self.add((func(i) for i in self.get_last_gen()))
         return self
 
@@ -58,7 +58,7 @@ class Stream(StreamBase):
         """
         return sum(1 for _ in self.get_last_gen())
 
-    def any_match(self, func: Generator) -> bool:
+    def any_match(self, func: Any) -> bool:
         """
         Method evaluates generators. Stream cannot be reused after this method.
 
@@ -67,7 +67,7 @@ class Stream(StreamBase):
         """
         return any(func(i) for i in self.get_last_gen())
 
-    def all_match(self, func: Generator) -> bool:
+    def all_match(self, func: Any) -> bool:
         """
         Method evaluates generators. Stream cannot be reused after this method.
 
@@ -100,37 +100,37 @@ class Stream(StreamBase):
         """
         return min(self.get_last_gen())
 
-    def map_to_str(self) -> object:
+    def map_to_str(self) -> Stream:
         """
         Helper method, include map-generator to change elements types to String.
         """
         return self.map(lambda x: str(x))
 
-    def map_to_int(self) -> object:
+    def map_to_int(self) -> Stream:
         """
         Helper method, include map-generator to change elements types to int.
         """
         return self.map(lambda x: int(x))
 
-    def map_to_float(self) -> object:
+    def map_to_float(self) -> Stream:
         """
         Helper method, include map-generator to change elements types to float.
         """
         return self.map(lambda x: float(x))
 
-    def only_dict(self) -> object:
+    def only_dict(self) -> Stream:
         """
         Helper method, include filter-generator for elements which are dicts.
         """
         return self.filter(lambda x: isinstance(x, dict))
 
-    def only_list(self) -> object:
+    def only_list(self) -> Stream:
         """
         Helper method, include filter-generator for elements which are lists, tuples or sets.
         """
         return self.filter(lambda x: isinstance(x, (list, set, tuple)))
 
-    def only_digits(self) -> object:
+    def only_digits(self) -> Stream:
         """
         Helper method, include filter-generator for elements which are digits.
         """
@@ -140,61 +140,61 @@ class Stream(StreamBase):
                       (isinstance(x, bytes) and self.REGEX_DIGITS_BYTES.match(x))
         )
 
-    def no_none(self) -> object:
+    def no_none(self) -> Stream:
         """
         Helper method, include filter-generator for not None elements.
         """
         return self.filter(lambda x: x is not None)
 
-    def no_list(self) -> object:
+    def no_list(self) -> Stream:
         """
         Helper method, include filter-generator for elements which are not list, tuple or set type.
         """
         return self.filter(lambda x: not isinstance(x, (list, set, tuple)))
 
-    def exists(self) -> object:
+    def exists(self) -> Stream:
         """
         Helper method, include filter-generator and check if element exists (are not empty, like empty list, None or empty String).
         """
         return self.filter(lambda x: x)
 
-    def even(self) -> object:
+    def even(self) -> Stream:
         """
         Helper method, include filter-generator for even elements.
         """
         return self.filter(lambda x: x%2 == 0)
 
-    def odd(self) -> object:
+    def odd(self) -> Stream:
         """
         Helper method, include filter-generator for odd elements.
         """
         return self.filter(lambda x: (x%2 - 1) == 0)
 
-    def gt(self, value: int) -> object:
+    def gt(self, value: int) -> Stream:
         """
         Helper method, include filter-generator for number-type elements which are greater than value.
         """
         return self.filter(lambda x: x > value)
 
-    def lt(self, value: int) -> object:
+    def lt(self, value: int) -> Stream:
         """
         Helper method, include filter-generator for number-type elements which are lower than value.
         """
         return self.filter(lambda x: x < value)
 
-    def ge(self, value: int) -> object:
+    def ge(self, value: int) -> Stream:
         """
         Helper method, include filter-generator for number-type elements which are greater and equal value.
         """
         return self.filter(lambda x: x >= value)
 
-    def le(self, value: int) -> object:
+    def le(self, value: int) -> Stream:
         """
         Helper method, include filter-generator for number-type elements which are less and equal value.
         """
         return self.filter(lambda x: x <= value)
 
-    def eq(self, value: object) -> object:
+    def eq(self, value: object) -> Stream:
         """
         Helper method, include filter-generator for number-type elements which are equal value.
         """

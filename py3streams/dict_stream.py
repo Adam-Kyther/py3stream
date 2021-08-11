@@ -21,11 +21,11 @@ class DictStream(StreamBase):
         """
         return self.iterable_object.items()
 
-    def filter(self, func: Generator) -> DictStream:
+    def filter(self, func: Any) -> DictStream:
         self.add(((k, v) for k, v in self.get_last_gen() if func(k, v)))
         return self
 
-    def map(self, func: Generator) -> DictStream:
+    def map(self, func: Any) -> DictStream:
         self.add((func(k, v) for k, v in self.get_last_gen()))
         return self
 
