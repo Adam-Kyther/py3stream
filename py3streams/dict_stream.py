@@ -1,3 +1,4 @@
+from __future__ import annotations
 
 from .stream_base import StreamBase
 from .stream import Stream
@@ -20,11 +21,11 @@ class DictStream(StreamBase):
         """
         return self.iterable_object.items()
 
-    def filter(self, func: Generator) -> Any:
+    def filter(self, func: Generator) -> DictStream:
         self.add(((k, v) for k, v in self.get_last_gen() if func(k, v)))
         return self
 
-    def map(self, func: Generator) -> Any:
+    def map(self, func: Generator) -> DictStream:
         self.add((func(k, v) for k, v in self.get_last_gen()))
         return self
 

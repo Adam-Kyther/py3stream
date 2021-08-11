@@ -1,3 +1,4 @@
+from __future__ import annotations
 
 from .stream_base import StreamBase
 import re
@@ -23,11 +24,11 @@ class Stream(StreamBase):
         """
         return self.iterable_object
 
-    def filter(self, func: Generator) -> object:
+    def filter(self, func: Generator) -> Stream:
         self.add((i for i in self.get_last_gen() if func(i)))
         return self
 
-    def map(self, func: Generator) -> object:
+    def map(self, func: Generator) -> Stream:
         self.add((func(i) for i in self.get_last_gen()))
         return self
 
