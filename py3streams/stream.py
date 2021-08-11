@@ -196,6 +196,12 @@ class Stream(StreamBase):
 
     def eq(self, value: object) -> Stream:
         """
-        Helper method, include filter-generator for number-type elements which are equal value.
+        Helper method, include filter-generator for object elements which are equal value.
         """
         return self.filter(lambda x: x == value)
+
+    def not_eq(self, value: object) -> Stream:
+        """
+        Helper method, include filter-generator for object elements which are NOT equal value.
+        """
+        return self.filter(lambda x: x != value)

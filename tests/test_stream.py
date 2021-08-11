@@ -56,3 +56,8 @@ class TestStream(unittest.TestCase):
         values = Stream(elements).only_digits().to_list()
         self.assertEqual(values, [1, 3, 4, '4.5'])
 
+    def test_not_equal(self):
+        val = (1, 2)
+        elements = [(4, 5), (1, 2), (6, 7)]
+        values = Stream(elements).not_eq(val).to_list()
+        self.assertEqual(values, [(4, 5), (6, 7)])
